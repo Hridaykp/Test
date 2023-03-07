@@ -1,9 +1,27 @@
-import express from 'express';
-
-const Product = require('../models/product.js');
+const express  = require('express');
 const router = express.Router();
+const Product = require('../models/product.js');
 
-export const AllProducts = async(req, res) => {
+ 
+const createNewProduct = async(req, res) => {
+    try{
+        const product = await Product.create(req.body);
+            res.status(201).json({
+                data:{
+                    product,
+                    msg: "Created successfuly"
+                }
+            });
+        console.log(product);
+    } catch(error){
+        res.status(404).json({
+            data: {
+               msg: "Error in creating a new product" 
+            }
+        })
+    }
+}
+ const AllProducts = async(req, res) => {
     try{
         const products = await Product.find({});
         if(products.length < 1){
@@ -24,8 +42,7 @@ export const AllProducts = async(req, res) => {
         })
     }
 }
-
-export const updateProduct = async(req, res) => {
+ const updateProduct = async(req, res) => {
     const {name,price, Qty} = req.body;
     try{
         const product = await Product.findByIdAndUpdate(
@@ -48,9 +65,11 @@ export const updateProduct = async(req, res) => {
         })
     }
 }
-router.get('/products');
-router.route('/create').post(AllProducts);
-router.route('/update').update(updateProduct)
+
+router.route('/create').post(createNewProduct);
+router.route('/').post(AllProducts);
+router.route('/products').put(updateProduct);
+
 
 
 

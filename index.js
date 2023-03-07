@@ -3,8 +3,7 @@
 const express = require('express')
 const mongoose = require('mongoose');
 
-const prod_Api = ('./routes/product_api.js');
-
+const prod_Api = require('./routes/product_api')
 const app = express();
 const port = 8000;
 express.Router();
@@ -20,3 +19,4 @@ mongoose.connection.on('connected', ()=>{
 app.listen(port, ()=>{
     console.log(`server running on port: ${port}`);
 })
+
