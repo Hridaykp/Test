@@ -1,9 +1,9 @@
 import express from 'express';
-const router = express.Router();
+
 const Product = require('../models/product.js');
+const router = express.Router();
 
-
-const AllProducts = async(req, res) => {
+export const AllProducts = async(req, res) => {
     try{
         const products = await Product.find({});
         if(products.length < 1){
@@ -25,7 +25,7 @@ const AllProducts = async(req, res) => {
     }
 }
 
-const updateProduct = async(req, res) => {
+export const updateProduct = async(req, res) => {
     const {name,price, Qty} = req.body;
     try{
         const product = await Product.findByIdAndUpdate(
@@ -48,9 +48,10 @@ const updateProduct = async(req, res) => {
         })
     }
 }
-router.get('/');
+router.get('/products');
 router.route('/create').post(AllProducts);
 router.route('/update').update(updateProduct)
+
 
 
 
