@@ -68,7 +68,7 @@ const createNewProduct = async(req, res) => {
 
 router.route('/create').post(createNewProduct);
 router.route('/').get(AllProducts);
-router.route('/products').put(updateProduct);
+router.route('/:id').put(updateProduct);
 
 
 
